@@ -11,7 +11,8 @@ public
 class BinaryEncoder: Encoder {
     internal let encoderBuffer: BinaryEncoderBuffer
 
-    init(_ minimumCapacity: Int) {
+    public
+    init(_ minimumCapacity: Int = 8) {
         // data.reserveCapacity(minimumCapacity)
         encoderBuffer = BinaryEncoderBuffer(minimumCapacity)
     }
@@ -39,9 +40,10 @@ class BinaryEncoder: Encoder {
 
 
 
-public extension BinaryEncoder {
+public
+extension BinaryEncoder {
     /// All errors which `BinaryEncoder` itself can throw.
-    enum Error: Swift.Error {
+     enum Error: Swift.Error {
         /// Attempted to encode a type which is `Encodable`, but not `BinaryEncodable`. (We
         /// require `BinaryEncodable` because `BinaryEncoder` doesn't support full keyed
         /// coding functionality.)
