@@ -33,13 +33,13 @@ final class BinaryEncoderBuffer {
 
 extension BinaryEncoderBuffer {
     func encode(_ value: [UInt8]) {
-         data.append(contentsOf: value)
+        data.append(contentsOf: value)
     }
-    
+
     func encode(_ value: Data) {
-         data.append(contentsOf: value)
+        data.append(contentsOf: value)
     }
-    
+
     func encode(_ value: Bool) {
         encode(value ? 1 as UInt8 : 0 as UInt8)
     }
@@ -91,11 +91,11 @@ extension BinaryEncoderBuffer {
     func encode(_ value: Double) {
         appendBytes(of: CFConvertDoubleHostToSwapped(value))
     }
-    
-    func encode<B:BinaryEncoded>(_ value: B) throws {
+
+    func encodeBinaryEncoded<B: BinaryEncoded>(_ value: B) throws {
         let encoder = BinaryEncoder()
-       
-        let data = try  encoder.encode(value)
+
+        let data = try encoder.encode(value)
         encode(data)
     }
 
@@ -138,9 +138,6 @@ extension BinaryEncoderBuffer {
         case let v as UInt32:
             encode(v)
 
-        case let v as BinaryEncoded:
-            try encode(v)
-        
         default:
             throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
         }

@@ -8,8 +8,8 @@
 import Foundation
 
 public
-protocol BinaryEncoded : Encodable  {
-    //var capasity:Int {get}
+protocol BinaryEncoded: Encodable {
+    // var capasity:Int {get}
 }
 
 public
