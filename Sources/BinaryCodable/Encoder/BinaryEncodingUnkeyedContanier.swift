@@ -106,16 +106,23 @@ extension BinaryEncodingUnkeyedContanier {
 
     public mutating
     func encode<T>(_ value: T) throws where T: Encodable {
-        try encoderBuffer.encode(value)
-    }
+        if value is BinaryEncoded {
+            try encodeBinaryEncoded(value)
+            return
+        }
 
-    public mutating
-    func encode<T>(_ value: T) throws where T: BinaryEncoded {
-        try encoderBuffer.encodeBinaryEncoded(value)
+        try encoderBuffer.encode(value)
     }
 
     public mutating
     func encode(_ value: Bool) throws {
         encoderBuffer.encode(value)
+    }
+
+    private mutating
+    func encodeBinaryEncoded<T: Encodable>(_ value: T) throws {
+        let encoder = BinaryEncoder()
+        let data = try encoder.encode(value)
+        encoderBuffer.encode(data)
     }
 }

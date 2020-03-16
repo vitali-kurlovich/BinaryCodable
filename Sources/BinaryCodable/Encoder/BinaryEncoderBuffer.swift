@@ -92,7 +92,7 @@ extension BinaryEncoderBuffer {
         appendBytes(of: CFConvertDoubleHostToSwapped(value))
     }
 
-    func encodeBinaryEncoded<B: BinaryEncoded>(_ value: B) throws {
+    func encodeBinaryEncoded<T: Encodable>(_ value: T) throws {
         let encoder = BinaryEncoder()
 
         let data = try encoder.encode(value)
@@ -137,6 +137,9 @@ extension BinaryEncoderBuffer {
 
         case let v as UInt32:
             encode(v)
+
+       // case let v as BinaryEncoded:
+       //     try encodeBinaryEncoded(encodable)
 
         default:
             throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
