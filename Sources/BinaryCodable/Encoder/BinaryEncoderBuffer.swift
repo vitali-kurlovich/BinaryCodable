@@ -6,6 +6,7 @@
 //
 
 import CoreFoundation
+import Foundation
 
 internal
 final class BinaryEncoderBuffer {
@@ -31,6 +32,14 @@ final class BinaryEncoderBuffer {
 }
 
 extension BinaryEncoderBuffer {
+    func encode(_ value: [UInt8]) {
+         data.append(contentsOf: value)
+    }
+    
+    func encode(_ value: Data) {
+         data.append(contentsOf: value)
+    }
+    
     func encode(_ value: Bool) {
         encode(value ? 1 as UInt8 : 0 as UInt8)
     }
@@ -48,7 +57,7 @@ extension BinaryEncoderBuffer {
     }
 
     func encode(_ value: UInt8) {
-        appendBytes(of: value)
+        data.append(value)
     }
 
     func encode(_ value: Int16) {
@@ -81,6 +90,13 @@ extension BinaryEncoderBuffer {
 
     func encode(_ value: Double) {
         appendBytes(of: CFConvertDoubleHostToSwapped(value))
+    }
+    
+    func encode<B:BinaryEncoded>(_ value: B) throws {
+        let encoder = BinaryEncoder()
+       
+        let data = try  encoder.encode(value)
+        encode(data)
     }
 
     func encode(_ encodable: Encodable) throws {

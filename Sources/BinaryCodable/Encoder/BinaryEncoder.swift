@@ -8,6 +8,11 @@
 import Foundation
 
 public
+protocol BinaryEncoded : Encodable  {
+    //var capasity:Int {get}
+}
+
+public
 class BinaryEncoder: Encoder {
     internal let encoderBuffer: BinaryEncoderBuffer
 
