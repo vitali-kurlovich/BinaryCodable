@@ -138,6 +138,9 @@ extension BinaryEncoderBuffer {
         case let v as UInt32:
             encode(v)
 
+        case let v as BinaryEncoded:
+            try encode(v)
+        
         default:
             throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
         }
