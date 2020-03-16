@@ -17,6 +17,11 @@ final class BinaryEncoderBuffer {
         data.reserveCapacity(minimumCapacity)
     }
 
+    public
+    func removeAll() {
+        data.removeAll(keepingCapacity: true)
+    }
+
     func appendBytes<T>(of: T) {
         var target = of
         withUnsafeBytes(of: &target) {
@@ -77,7 +82,6 @@ extension BinaryEncoderBuffer {
     func encode(_ value: Double) {
         appendBytes(of: CFConvertDoubleHostToSwapped(value))
     }
-
 
     func encode(_ encodable: Encodable) throws {
         switch encodable {

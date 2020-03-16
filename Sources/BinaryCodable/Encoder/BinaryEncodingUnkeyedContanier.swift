@@ -10,12 +10,12 @@ import Foundation
 public
 struct BinaryEncodingUnkeyedContanier: UnkeyedEncodingContainer, SingleValueEncodingContainer {
     internal let encoder: BinaryEncoder
-    
+
     private var encoderBuffer: BinaryEncoderBuffer {
         encoder.encoderBuffer
     }
 
-    public var codingPath:  [CodingKey] { [] }
+    public var codingPath: [CodingKey] { [] }
 
     public var count: Int { 0 }
 

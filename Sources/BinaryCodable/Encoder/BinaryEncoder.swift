@@ -13,12 +13,16 @@ class BinaryEncoder: Encoder {
 
     public
     init(_ minimumCapacity: Int = 8) {
-        // data.reserveCapacity(minimumCapacity)
         encoderBuffer = BinaryEncoderBuffer(minimumCapacity)
     }
-    
-    open func encode<T>(_ value: T) throws -> Data where T : Encodable {
-        Data( encoderBuffer.data)
+
+    open func encode<T>(_ value: T) throws -> Data where T: Encodable {
+        encoderBuffer.removeAll()
+        try value.encode(to: self)
+        defer {
+            encoderBuffer.removeAll()
+        }
+        return Data(encoderBuffer.data)
     }
 
     public var codingPath: [CodingKey] { [] }
@@ -38,12 +42,10 @@ class BinaryEncoder: Encoder {
     }
 }
 
-
-
 public
 extension BinaryEncoder {
     /// All errors which `BinaryEncoder` itself can throw.
-     enum Error: Swift.Error {
+    enum Error: Swift.Error {
         /// Attempted to encode a type which is `Encodable`, but not `BinaryEncodable`. (We
         /// require `BinaryEncodable` because `BinaryEncoder` doesn't support full keyed
         /// coding functionality.)
@@ -53,7 +55,3 @@ extension BinaryEncoder {
         case typeNotConformingToEncodable(Any.Type)
     }
 }
-
-
-
-

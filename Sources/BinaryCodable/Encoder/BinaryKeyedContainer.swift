@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 internal
 struct BinaryKeyedContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
     internal var encoder: BinaryEncoder
@@ -15,7 +14,7 @@ struct BinaryKeyedContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
     private var encoderBuffer: BinaryEncoderBuffer {
         encoder.encoderBuffer
     }
-    
+
     var codingPath: [CodingKey] { [] }
 
     func encode<T>(_ value: T, forKey _: Key) throws where T: Encodable {
