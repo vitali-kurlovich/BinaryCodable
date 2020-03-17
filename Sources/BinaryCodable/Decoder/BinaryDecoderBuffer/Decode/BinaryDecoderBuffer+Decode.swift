@@ -47,4 +47,31 @@ extension BinaryDecoderBuffer {
     public func decode() throws -> UInt64 {
         try decodeFixedWidthInteger()
     }
+
+    public func decode() throws -> Int {
+        let v: Int64 = try decodeFixedWidthInteger()
+        return Int(v)
+    }
+
+    public func decode() throws -> UInt {
+        let v: UInt64 = try decodeFixedWidthInteger()
+        return UInt(v)
+    }
+
+    public func decode() throws -> Bool {
+        let v: UInt8 = try decodeFixedWidthInteger()
+        return v != 0
+    }
+
+    public func decode() throws -> Float {
+        var swapped = CFSwappedFloat32()
+        try read(into: &swapped)
+        return CFConvertFloatSwappedToHost(swapped)
+    }
+
+    public func decode() throws -> Double {
+        var swapped = CFSwappedFloat64()
+        try read(into: &swapped)
+        return CFConvertDoubleSwappedToHost(swapped)
+    }
 }

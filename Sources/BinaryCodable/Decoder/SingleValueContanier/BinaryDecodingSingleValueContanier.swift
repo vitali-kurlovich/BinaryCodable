@@ -9,6 +9,8 @@ import Foundation
 
 public
 struct BinaryDecodingSingleValueContanier: SingleValueDecodingContainer {
+    typealias Error = BinaryDecoder.Error
+
     internal let decoder: BinaryDecoder
 
     internal var buffer: BinaryDecoderBuffer {
@@ -16,6 +18,4 @@ struct BinaryDecodingSingleValueContanier: SingleValueDecodingContainer {
     }
 
     public var codingPath: [CodingKey] { [] }
-
-    typealias Error = BinaryDecoder.Error
 }
