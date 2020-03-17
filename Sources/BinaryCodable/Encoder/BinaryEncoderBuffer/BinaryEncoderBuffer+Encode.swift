@@ -1,37 +1,14 @@
 //
-//  BinaryEncoderBuffer.swift
-//  Dense
+//  BinaryEncoderBuffer+Encode.swift
+//  BinaryCodable
 //
-//  Created by Vitali Kurlovich on 3/16/20.
+//  Created by Vitali Kurlovich on 3/17/20.
 //
 
-import CoreFoundation
 import Foundation
 
-internal
-final class BinaryEncoderBuffer {
-    typealias Error = BinaryEncoder.Error
-
-    private(set) var data: [UInt8] = []
-
-    init(_ minimumCapacity: Int) {
-        data.reserveCapacity(minimumCapacity)
-    }
-
-    public
-    func removeAll() {
-        data.removeAll(keepingCapacity: true)
-    }
-
-    func appendBytes<T>(of: T) {
-        var target = of
-        withUnsafeBytes(of: &target) {
-            data.append(contentsOf: $0)
-        }
-    }
-}
-
 extension BinaryEncoderBuffer {
+    internal
     func encode(_ value: [UInt8]) {
         data.append(contentsOf: value)
     }
@@ -92,13 +69,6 @@ extension BinaryEncoderBuffer {
         appendBytes(of: CFConvertDoubleHostToSwapped(value))
     }
 
-    func encodeBinaryEncoded<T: Encodable>(_ value: T) throws {
-        let encoder = BinaryEncoder()
-
-        let data = try encoder.encode(value)
-        encode(data)
-    }
-
     func encode(_ encodable: Encodable) throws {
         switch encodable {
         case let v as Int:
@@ -137,9 +107,6 @@ extension BinaryEncoderBuffer {
 
         case let v as UInt32:
             encode(v)
-
-       // case let v as BinaryEncoded:
-       //     try encodeBinaryEncoded(encodable)
 
         default:
             throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))

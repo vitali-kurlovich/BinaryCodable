@@ -8,7 +8,7 @@
 import Foundation
 
 internal
-struct BinaryKeyedContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
+struct BinaryKeyedEncodingContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
     internal var encoder: BinaryEncoder
 
     private var encoderBuffer: BinaryEncoderBuffer {

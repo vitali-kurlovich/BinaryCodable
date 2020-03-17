@@ -11,7 +11,7 @@ public
 protocol BinaryEncoded {}
 
 public
-class BinaryEncoder: Encoder {
+final class BinaryEncoder: Encoder {
     internal let encoderBuffer: BinaryEncoderBuffer
 
     public
@@ -19,7 +19,7 @@ class BinaryEncoder: Encoder {
         encoderBuffer = BinaryEncoderBuffer(minimumCapacity)
     }
 
-    open func encode<T>(_ value: T) throws -> Data where T: Encodable {
+    public func encode<T>(_ value: T) throws -> Data where T: Encodable {
         encoderBuffer.removeAll()
         try value.encode(to: self)
         defer {
@@ -33,7 +33,7 @@ class BinaryEncoder: Encoder {
     public var userInfo: [CodingUserInfoKey: Any] { [:] }
 
     public func container<Key>(keyedBy _: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        return KeyedEncodingContainer(BinaryKeyedContainer<Key>(encoder: self))
+        return KeyedEncodingContainer(BinaryKeyedEncodingContainer<Key>(encoder: self))
     }
 
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
@@ -49,6 +49,8 @@ public
 extension BinaryEncoder {
     /// All errors which `BinaryEncoder` itself can throw.
     enum Error: Swift.Error {
+        case typeNotSupported
+
         /// Attempted to encode a type which is `Encodable`, but not `BinaryEncodable`. (We
         /// require `BinaryEncodable` because `BinaryEncoder` doesn't support full keyed
         /// coding functionality.)

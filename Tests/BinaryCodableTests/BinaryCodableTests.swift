@@ -2,9 +2,9 @@
 import XCTest
 
 final class BinaryCodableTests: XCTestCase {
-    func testExample() {}
+    func testEncoding() {}
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testEncoding", testEncoding),
     ]
 }
