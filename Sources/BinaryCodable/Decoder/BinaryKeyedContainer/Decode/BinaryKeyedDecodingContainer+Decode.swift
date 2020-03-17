@@ -31,23 +31,11 @@ extension BinaryKeyedDecodingContainer {
         throw Error.typeNotSupported
     }
 
-    func decode(_: Int8.Type, forKey _: Key) throws -> Int8 {
-        throw Error.typeNotSupported
-    }
-
-    func decode(_: Int16.Type, forKey _: Key) throws -> Int16 {
-        throw Error.typeNotSupported
-    }
-
-    func decode(_: Int32.Type, forKey _: Key) throws -> Int32 {
-        throw Error.typeNotSupported
-    }
-
-    func decode(_: Int64.Type, forKey _: Key) throws -> Int64 {
-        throw Error.typeNotSupported
-    }
-
     func decode(_: UInt.Type, forKey _: Key) throws -> UInt {
+        throw Error.typeNotSupported
+    }
+
+    func decode(_: Int8.Type, forKey _: Key) throws -> Int8 {
         throw Error.typeNotSupported
     }
 
@@ -55,11 +43,23 @@ extension BinaryKeyedDecodingContainer {
         throw Error.typeNotSupported
     }
 
+    func decode(_: Int16.Type, forKey _: Key) throws -> Int16 {
+        throw Error.typeNotSupported
+    }
+
     func decode(_: UInt16.Type, forKey _: Key) throws -> UInt16 {
         throw Error.typeNotSupported
     }
 
+    func decode(_: Int32.Type, forKey _: Key) throws -> Int32 {
+        throw Error.typeNotSupported
+    }
+
     func decode(_: UInt32.Type, forKey _: Key) throws -> UInt32 {
+        throw Error.typeNotSupported
+    }
+
+    func decode(_: Int64.Type, forKey _: Key) throws -> Int64 {
         throw Error.typeNotSupported
     }
 

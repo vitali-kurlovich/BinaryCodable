@@ -30,5 +30,3 @@ final class BinaryEncoderBuffer {
         }
     }
 }
-
-//  mutating func encode<T>(contentsOf sequence: T) throws where T : Sequence, T.Element == Bool

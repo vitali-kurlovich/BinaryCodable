@@ -11,6 +11,10 @@ public
 struct BinaryDecodingSingleValueContanier: SingleValueDecodingContainer {
     internal let decoder: BinaryDecoder
 
+    internal var buffer: BinaryDecoderBuffer {
+        decoder.decoderBuffer
+    }
+
     public var codingPath: [CodingKey] { [] }
 
     typealias Error = BinaryDecoder.Error

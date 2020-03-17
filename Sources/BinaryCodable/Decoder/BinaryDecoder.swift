@@ -9,6 +9,8 @@ import Foundation
 
 public
 final class BinaryDecoder: Decoder {
+    internal var decoderBuffer = BinaryDecoderBuffer()
+
     public var codingPath: [CodingKey] { [] }
 
     public var userInfo: [CodingUserInfoKey: Any] { [:] }
@@ -26,10 +28,22 @@ final class BinaryDecoder: Decoder {
     }
 }
 
+extension BinaryDecoder {
+    func decode<T>(_: T.Type, from: Data) throws -> T where T: Decodable {
+        decoderBuffer = BinaryDecoderBuffer(from)
+        defer {
+            self.decoderBuffer = BinaryDecoderBuffer.zero
+        }
+        return try T(from: self)
+    }
+}
+
 public
 extension BinaryDecoder {
     /// All errors which `BinaryEncoder` itself can throw.
     enum Error: Swift.Error {
+        case unknown
         case typeNotSupported
+        case prematureEndOfData
     }
 }

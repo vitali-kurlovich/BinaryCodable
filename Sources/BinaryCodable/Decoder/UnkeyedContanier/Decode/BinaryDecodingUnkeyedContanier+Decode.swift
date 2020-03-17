@@ -7,7 +7,6 @@
 
 import Foundation
 
-// BinaryDecodingUnkeyedContanier+Decode
 extension BinaryDecodingUnkeyedContanier {
     public mutating func decodeNil() throws -> Bool {
         throw Error.typeNotSupported
