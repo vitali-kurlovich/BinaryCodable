@@ -13,13 +13,23 @@ struct BinaryDecodingUnkeyedContanier: UnkeyedDecodingContainer {
 
     internal let decoder: BinaryDecoder
 
+    internal var buffer: BinaryDecoderBuffer {
+        decoder.decoderBuffer
+    }
+
     public var codingPath: [CodingKey] { [] }
 
-    public var count: Int?
+    public var count: Int? {
+        buffer.size
+    }
 
-    public var isAtEnd: Bool = false
+    public var isAtEnd: Bool {
+        buffer.offset == buffer.size - 1
+    }
 
-    public var currentIndex: Int { 0 }
+    public var currentIndex: Int {
+        buffer.offset
+    }
 
     public mutating func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> where NestedKey: CodingKey {
         try decoder.container(keyedBy: type)

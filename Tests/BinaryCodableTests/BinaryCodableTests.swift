@@ -58,7 +58,7 @@ struct TestStructure: Equatable {
 
 extension TestStructure: Codable {
     func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
+        var container = encoder.unkeyedContainer()
 
         try container.encode(int)
         try container.encode(uint)
@@ -83,7 +83,7 @@ extension TestStructure: Codable {
     }
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
+        var container = try decoder.unkeyedContainer()
 
         int = try container.decode(Int.self)
         uint = try container.decode(UInt.self)

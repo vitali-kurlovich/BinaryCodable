@@ -9,13 +9,6 @@ import CoreFoundation
 import Foundation
 
 extension BinaryDecoderBuffer {
-    private
-    func decodeFixedWidthInteger<T: FixedWidthInteger>() throws -> T {
-        var v = T()
-        try read(into: &v)
-        return T(littleEndian: v)
-    }
-
     func decode() throws -> Int8 {
         try decodeFixedWidthInteger()
     }
@@ -73,5 +66,84 @@ extension BinaryDecoderBuffer {
         var swapped = CFSwappedFloat64()
         try read(into: &swapped)
         return CFConvertDoubleSwappedToHost(swapped)
+    }
+
+    public func decode<T: Decodable>() throws -> T {
+        switch T.self {
+        case is Int.Type:
+            let v: Int = try decode()
+            return v as! T
+
+        case is UInt.Type:
+            let v: UInt = try decode()
+            return v as! T
+
+        case is Float.Type:
+            let v: Float = try decode()
+            return v as! T
+
+        case is Double.Type:
+            let v: Double = try decode()
+            return v as! T
+
+        case is Bool.Type:
+            let v: Bool = try decode()
+            return v as! T
+
+        case is Int8.Type:
+            let v: Int8 = try decode()
+            return v as! T
+
+        case is UInt8.Type:
+            let v: UInt8 = try decode()
+            return v as! T
+
+        case is Int16.Type:
+            let v: Int16 = try decode()
+            return v as! T
+
+        case is UInt16.Type:
+            let v: UInt16 = try decode()
+            return v as! T
+
+        case is Int32.Type:
+            let v: Int32 = try decode()
+            return v as! T
+
+        case is UInt32.Type:
+            let v: UInt32 = try decode()
+            return v as! T
+
+        case is Int64.Type:
+            let v: Int64 = try decode()
+            return v as! T
+
+        case is UInt64.Type:
+            let v: UInt64 = try decode()
+            return v as! T
+
+        case is String.Type:
+            let v: String = try decode()
+            return v as! T
+
+        default:
+            break
+        }
+        throw Error.typeNotSupported
+    }
+}
+
+extension BinaryDecoderBuffer {
+    func decode() throws -> String {
+        throw Error.typeNotSupported
+    }
+}
+
+private
+extension BinaryDecoderBuffer {
+    func decodeFixedWidthInteger<T: FixedWidthInteger>() throws -> T {
+        var v = T()
+        try read(into: &v)
+        return T(littleEndian: v)
     }
 }

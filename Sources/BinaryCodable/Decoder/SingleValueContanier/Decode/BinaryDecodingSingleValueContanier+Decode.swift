@@ -9,7 +9,6 @@ import Foundation
 
 extension BinaryDecodingSingleValueContanier {
     public func decodeNil() -> Bool {
-        // throw Error.typeNotSupported
         false
     }
 
@@ -18,7 +17,7 @@ extension BinaryDecodingSingleValueContanier {
     }
 
     public func decode(_: String.Type) throws -> String {
-        throw Error.typeNotSupported
+        try buffer.decode()
     }
 
     public func decode(_: Double.Type) throws -> Double {
@@ -70,6 +69,6 @@ extension BinaryDecodingSingleValueContanier {
     }
 
     public func decode<T>(_: T.Type) throws -> T where T: Decodable {
-        throw Error.typeNotSupported
+        try buffer.decode()
     }
 }

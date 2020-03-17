@@ -8,6 +8,9 @@
 import Foundation
 
 public
+protocol BinaryDecoded {}
+
+public
 final class BinaryDecoder: Decoder {
     internal var decoderBuffer = BinaryDecoderBuffer()
 
@@ -16,7 +19,8 @@ final class BinaryDecoder: Decoder {
     public var userInfo: [CodingUserInfoKey: Any] { [:] }
 
     public func container<Key>(keyedBy _: Key.Type) throws -> KeyedDecodingContainer<Key> where Key: CodingKey {
-        return KeyedDecodingContainer(BinaryKeyedDecodingContainer<Key>(decoder: self))
+        throw Error.keyedDecodingNotSupported
+        // return KeyedDecodingContainer(BinaryKeyedDecodingContainer<Key>(decoder: self))
     }
 
     public func unkeyedContainer() throws -> UnkeyedDecodingContainer {
@@ -43,6 +47,7 @@ extension BinaryDecoder {
     /// All errors which `BinaryEncoder` itself can throw.
     enum Error: Swift.Error {
         case unknown
+        case keyedDecodingNotSupported
         case typeNotSupported
         case prematureEndOfData
     }

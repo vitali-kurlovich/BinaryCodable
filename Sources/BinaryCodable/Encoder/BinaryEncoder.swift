@@ -33,7 +33,7 @@ final class BinaryEncoder: Encoder {
     public var userInfo: [CodingUserInfoKey: Any] { [:] }
 
     public func container<Key>(keyedBy _: Key.Type) -> KeyedEncodingContainer<Key> where Key: CodingKey {
-        return KeyedEncodingContainer(BinaryKeyedEncodingContainer<Key>(encoder: self))
+        KeyedEncodingContainer(BinaryKeyedEncodingContainer<Key>(encoder: self))
     }
 
     public func unkeyedContainer() -> UnkeyedEncodingContainer {
@@ -50,6 +50,8 @@ extension BinaryEncoder {
     /// All errors which `BinaryEncoder` itself can throw.
     enum Error: Swift.Error {
         case typeNotSupported
+
+        case keyedEncodingNotSupported
 
         /// Attempted to encode a type which is `Encodable`, but not `BinaryEncodable`. (We
         /// require `BinaryEncodable` because `BinaryEncoder` doesn't support full keyed
