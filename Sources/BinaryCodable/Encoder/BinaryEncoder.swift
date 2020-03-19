@@ -8,24 +8,17 @@
 import Foundation
 
 public
-protocol BinaryEncoded {}
-
-public
 final class BinaryEncoder: Encoder {
     internal let encoderBuffer: BinaryEncoderBuffer
 
-    public
-    init(_ minimumCapacity: Int = 8) {
-        encoderBuffer = BinaryEncoderBuffer(minimumCapacity)
+    internal
+    init(_ buffer: BinaryEncoderBuffer) {
+        encoderBuffer = buffer
     }
 
-    public func encode<T>(_ value: T) throws -> Data where T: Encodable {
-        encoderBuffer.removeAll()
-        try value.encode(to: self)
-        defer {
-            encoderBuffer.removeAll()
-        }
-        return Data(encoderBuffer.data)
+    public
+    convenience init(_ minimumCapacity: Int = 8) {
+        self.init(BinaryEncoderBuffer(minimumCapacity))
     }
 
     public var codingPath: [CodingKey] { [] }

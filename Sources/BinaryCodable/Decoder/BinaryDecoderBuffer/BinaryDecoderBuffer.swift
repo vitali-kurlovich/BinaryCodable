@@ -13,6 +13,7 @@ final class BinaryDecoderBuffer {
 
     private let data: [UInt8]
     private(set) var offset: Int = 0
+
     var size: Int {
         data.count
     }

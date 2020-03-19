@@ -109,7 +109,10 @@ extension BinaryEncoderBuffer {
             encode(v)
 
         default:
-            throw Error.typeNotConformingToBinaryEncodable(type(of: encodable))
+            let encoder = BinaryEncoder(self)
+            try encodable.encode(to: encoder)
+            // encoder.encode(encodable)
+            // ToBinaryEncodable(type(of: encodable))
         }
     }
 }

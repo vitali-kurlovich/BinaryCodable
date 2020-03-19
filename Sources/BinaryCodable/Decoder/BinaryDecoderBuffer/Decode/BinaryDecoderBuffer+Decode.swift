@@ -127,9 +127,10 @@ extension BinaryDecoderBuffer {
             return v as! T
 
         default:
-            break
+            let decoder = BinaryDecoder()
+            decoder.decoderBuffer = self
+            return try T(from: decoder)
         }
-        throw Error.typeNotSupported
     }
 }
 

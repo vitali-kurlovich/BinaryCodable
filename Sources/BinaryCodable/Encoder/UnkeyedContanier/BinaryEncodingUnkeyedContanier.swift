@@ -34,6 +34,6 @@ struct BinaryEncodingUnkeyedContanier: UnkeyedEncodingContainer, SingleValueEnco
 
     public mutating
     func superEncoder() -> Encoder {
-        encoder
+        BinaryEncoder(encoderBuffer)
     }
 }

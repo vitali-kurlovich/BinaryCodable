@@ -7,9 +7,12 @@
 
 import Foundation
 
-// BinaryEncodingUnkeyedContanier+Encode
-
 extension BinaryEncodingUnkeyedContanier {
+    public mutating
+    func encode<T>(_ value: T) throws where T: Encodable {
+        try encoderBuffer.encode(value)
+    }
+
     public mutating
     func encode(_ value: String) throws {
         try encoderBuffer.encode(value)
@@ -76,24 +79,7 @@ extension BinaryEncodingUnkeyedContanier {
     }
 
     public mutating
-    func encode<T>(_ value: T) throws where T: Encodable {
-        if value is BinaryEncoded {
-            try encodeBinaryEncoded(value)
-            return
-        }
-
-        try encoderBuffer.encode(value)
-    }
-
-    public mutating
     func encode(_ value: Bool) throws {
         encoderBuffer.encode(value)
-    }
-
-    private mutating
-    func encodeBinaryEncoded<T: Encodable>(_ value: T) throws {
-        let encoder = BinaryEncoder()
-        let data = try encoder.encode(value)
-        encoderBuffer.encode(data)
     }
 }

@@ -12,7 +12,7 @@ protocol BinaryDecoded {}
 
 public
 final class BinaryDecoder: Decoder {
-    internal var decoderBuffer = BinaryDecoderBuffer()
+    internal var decoderBuffer = BinaryDecoderBuffer.zero
 
     public var codingPath: [CodingKey] { [] }
 
@@ -29,16 +29,6 @@ final class BinaryDecoder: Decoder {
 
     public func singleValueContainer() throws -> SingleValueDecodingContainer {
         BinaryDecodingSingleValueContanier(decoder: self)
-    }
-}
-
-extension BinaryDecoder {
-    func decode<T>(_: T.Type, from: Data) throws -> T where T: Decodable {
-        decoderBuffer = BinaryDecoderBuffer(from)
-        defer {
-            self.decoderBuffer = BinaryDecoderBuffer.zero
-        }
-        return try T(from: self)
     }
 }
 
