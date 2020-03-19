@@ -2,7 +2,7 @@
 import XCTest
 
 final class BinaryCodableTests: XCTestCase {
-    func testEncoding() {
+    func testEncodingBaseTypes() {
         let test = TestStructure(int: -8_706_503_005_435_567, uint: 849_900_345_677,
                                  int8: -71, uint8: 113,
                                  int16: -14322, uint16: 47653,
@@ -28,7 +28,7 @@ final class BinaryCodableTests: XCTestCase {
         XCTAssertEqual(test, value)
     }
 
-    func testEncoding1() {
+    func testEncodingEncadable() {
         let field1 = TestStructure(int: -8_706_503_005_435_567, uint: 849_900_345_677,
                                    int8: -71, uint8: 113,
                                    int16: -14322, uint16: 47653,
@@ -65,8 +65,39 @@ final class BinaryCodableTests: XCTestCase {
         XCTAssertEqual(test, value)
     }
 
+    func testEncodingBaseSequence() {
+        let test = TestSequenceStructure(int: [-8, -2_134_500_031, 145_678_933, 4],
+                                         uint: [8, 2_134_500_031, 145_678_933, 4],
+                                         int8: [-56, 4, 127, -123],
+                                         uint8: [56, 4, 119, 123],
+                                         int16: [-31356, 25665, 3, 5432],
+                                         uint16: [41356, 25665, 356, 15432],
+                                         int32: [-1_405_543_345, 676, 334_567_765, -5_678_765],
+                                         uint32: [1_405_543_345, 676, 4_234_567_765, 15_678_765],
+                                         int64: [-1_400_555_543_340_995, 1676, 334_568_897_765, -5_667_866_678_765],
+                                         uint64: [561_400_555_543_340_995, 1676, 889_334_568_897_765, 35_667_866_678_765], bool: [true, false, false, true, true, false],
+                                         float: [-1.46337, 223.4567, 54.567654, -237.467],
+                                         double: [-1.466765337, 456_223.4567, 5434.56765554, -256_737.467])
+
+        let encoder = BinaryEncoder()
+        let decoder = BinaryDecoder()
+
+        XCTAssertNoThrow(try encoder.encode(test))
+        guard let data = try? encoder.encode(test) else {
+            return
+        }
+
+        XCTAssertNoThrow(try decoder.decode(TestSequenceStructure.self, from: data))
+        guard let value = try? decoder.decode(TestSequenceStructure.self, from: data) else {
+            return
+        }
+        XCTAssertEqual(test, value)
+    }
+
     static var allTests = [
-        ("testEncoding", testEncoding),
+        ("testEncodingBaseTypes", testEncodingBaseTypes),
+        ("testEncodingEncadable", testEncodingEncadable),
+        ("testEncodingBaseSequence", testEncodingBaseSequence),
     ]
 }
 
@@ -91,25 +122,6 @@ struct TestStructure: Equatable {
 
     let float: Float
     let double: Double
-}
-
-struct TestBinaryCodableStructure: Equatable {
-    let field1: TestStructure
-    let field2: TestStructure
-}
-
-extension TestBinaryCodableStructure: Codable {
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.unkeyedContainer()
-        try container.encode(field1)
-        try container.encode(field2)
-    }
-
-    init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        field1 = try container.decode(TestStructure.self)
-        field2 = try container.decode(TestStructure.self)
-    }
 }
 
 extension TestStructure: Codable {
@@ -161,5 +173,96 @@ extension TestStructure: Codable {
 
         float = try container.decode(Float.self)
         double = try container.decode(Double.self)
+    }
+}
+
+struct TestBinaryCodableStructure: Equatable {
+    let field1: TestStructure
+    let field2: TestStructure
+}
+
+extension TestBinaryCodableStructure: Codable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try container.encode(field1)
+        try container.encode(field2)
+    }
+
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        field1 = try container.decode(TestStructure.self)
+        field2 = try container.decode(TestStructure.self)
+    }
+}
+
+struct TestSequenceStructure: Equatable {
+    let int: [Int]
+    let uint: [UInt]
+
+    let int8: [Int8]
+    let uint8: [UInt8]
+
+    let int16: [Int16]
+    let uint16: [UInt16]
+
+    let int32: [Int32]
+    let uint32: [UInt32]
+
+    let int64: [Int64]
+    let uint64: [UInt64]
+
+    let bool: [Bool]
+
+    let float: [Float]
+    let double: [Double]
+}
+
+extension TestSequenceStructure: Codable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+
+        try container.encode(int)
+        try container.encode(uint)
+
+        try container.encode(int8)
+        try container.encode(uint8)
+
+        try container.encode(int16)
+        try container.encode(uint16)
+
+        try container.encode(int32)
+        try container.encode(uint32)
+
+        try container.encode(int64)
+        try container.encode(uint64)
+
+        try container.encode(bool)
+
+        try container.encode(float)
+        try container.encode(double)
+    }
+
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+
+        int = try container.decode([Int].self)
+        uint = try container.decode([UInt].self)
+
+        int8 = try container.decode([Int8].self)
+        uint8 = try container.decode([UInt8].self)
+
+        int16 = try container.decode([Int16].self)
+        uint16 = try container.decode([UInt16].self)
+
+        int32 = try container.decode([Int32].self)
+        uint32 = try container.decode([UInt32].self)
+
+        int64 = try container.decode([Int64].self)
+        uint64 = try container.decode([UInt64].self)
+
+        bool = try container.decode([Bool].self)
+
+        float = try container.decode([Float].self)
+        double = try container.decode([Double].self)
     }
 }

@@ -9,6 +9,11 @@ import Foundation
 
 extension BinaryEncodingUnkeyedContanier {
     public mutating
+    func encode<T>(_ value: T) throws where T: Encodable & Sequence {
+        try encoderBuffer.encode(value)
+    }
+
+    public mutating
     func encode<T>(_ value: T) throws where T: Encodable {
         try encoderBuffer.encode(value)
     }

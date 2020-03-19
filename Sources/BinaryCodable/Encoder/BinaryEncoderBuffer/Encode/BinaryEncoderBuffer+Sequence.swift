@@ -16,6 +16,15 @@ extension BinaryEncoderBuffer {
         return count
     }
 
+    func encode<T>(contentsOf sequence: T) where T: Sequence, T.Element == Int8 {
+        let count = size(sequence)
+
+        data.reserveCapacity(MemoryLayout.size(ofValue: count) + Int(count))
+        encode(count)
+        sequence.forEach { encode($0) }
+        // data.append(contentsOf: sequence)
+    }
+
     func encode<T>(contentsOf sequence: T) where T: Sequence, T.Element == UInt8 {
         let count = size(sequence)
 
@@ -97,6 +106,24 @@ extension BinaryEncoderBuffer {
     }
 
     func encode<T>(contentsOf sequence: T) where T: Sequence, T.Element == UInt16 {
+        let count = size(sequence)
+
+        data.reserveCapacity(MemoryLayout.size(ofValue: count) + MemoryLayout<T.Element>.size * Int(count))
+        encode(count)
+
+        sequence.forEach { encode($0) }
+    }
+
+    func encode<T>(contentsOf sequence: T) where T: Sequence, T.Element == Float {
+        let count = size(sequence)
+
+        data.reserveCapacity(MemoryLayout.size(ofValue: count) + MemoryLayout<T.Element>.size * Int(count))
+        encode(count)
+
+        sequence.forEach { encode($0) }
+    }
+
+    func encode<T>(contentsOf sequence: T) where T: Sequence, T.Element == Double {
         let count = size(sequence)
 
         data.reserveCapacity(MemoryLayout.size(ofValue: count) + MemoryLayout<T.Element>.size * Int(count))

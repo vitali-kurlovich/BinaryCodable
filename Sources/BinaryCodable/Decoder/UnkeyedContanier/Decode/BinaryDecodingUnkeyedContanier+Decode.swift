@@ -71,4 +71,9 @@ extension BinaryDecodingUnkeyedContanier {
     public mutating func decode<T>(_: T.Type) throws -> T where T: Decodable {
         try buffer.decode()
     }
+
+    func decode<S: Sequence, T: Decodable>(_: S.Type) throws -> [T] where S.Element == T {
+        throw BinaryDecoder.Error.typeNotSupported
+        /// try decodeArray()
+    }
 }

@@ -25,11 +25,6 @@ final class BinaryDecoderBuffer {
     init(_ data: Data) {
         self.data = [UInt8](data)
     }
-
-//    internal
-//    func removeAll() {
-//        data.removeAll(keepingCapacity: true)
-//    }
 }
 
 extension BinaryDecoderBuffer {

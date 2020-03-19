@@ -69,7 +69,9 @@ extension BinaryDecoderBuffer {
     }
 
     public func decode<T: Decodable>() throws -> T {
-        switch T.self {
+        let type = T.self
+
+        switch type {
         case is Int.Type:
             let v: Int = try decode()
             return v as! T
@@ -126,6 +128,58 @@ extension BinaryDecoderBuffer {
             let v: String = try decode()
             return v as! T
 
+        case is [Int].Type:
+            let v: [Int] = try decodeArray()
+            return v as! T
+
+        case is [UInt].Type:
+            let v: [UInt] = try decodeArray()
+            return v as! T
+
+        case is [Int8].Type:
+            let v: [Int8] = try decodeArray()
+            return v as! T
+
+        case is [UInt8].Type:
+            let v: [UInt8] = try decodeArray()
+            return v as! T
+
+        case is [Int16].Type:
+            let v: [Int16] = try decodeArray()
+            return v as! T
+
+        case is [UInt16].Type:
+            let v: [UInt16] = try decodeArray()
+            return v as! T
+
+        case is [Int32].Type:
+            let v: [Int32] = try decodeArray()
+            return v as! T
+
+        case is [UInt32].Type:
+            let v: [UInt32] = try decodeArray()
+            return v as! T
+
+        case is [Int64].Type:
+            let v: [Int64] = try decodeArray()
+            return v as! T
+
+        case is [UInt64].Type:
+            let v: [UInt64] = try decodeArray()
+            return v as! T
+
+        case is [Bool].Type:
+            let v: [Bool] = try decodeArray()
+            return v as! T
+
+        case is [Float].Type:
+            let v: [Float] = try decodeArray()
+            return v as! T
+
+        case is [Double].Type:
+            let v: [Double] = try decodeArray()
+            return v as! T
+
         default:
             let decoder = BinaryDecoder()
             decoder.decoderBuffer = self
@@ -146,5 +200,28 @@ extension BinaryDecoderBuffer {
         var v = T()
         try read(into: &v)
         return T(littleEndian: v)
+    }
+}
+
+private
+extension BinaryDecoderBuffer {
+    func decodeArray<T: Decodable>() throws -> [T] {
+        let count: UInt32 = try decode()
+
+        var array = [T]()
+        array.reserveCapacity(Int(count))
+
+        for _ in 0 ..< count {
+            let item: T = try decode()
+            array.append(item)
+        }
+
+        return array
+    }
+}
+
+extension BinaryDecoderBuffer {
+    func decode<S: Sequence, T: Decodable>(_: S.Type) throws -> [T] where S.Element == T {
+        try decodeArray()
     }
 }

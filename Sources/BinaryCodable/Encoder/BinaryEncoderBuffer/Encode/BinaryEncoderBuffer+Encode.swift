@@ -8,11 +8,6 @@
 import Foundation
 
 extension BinaryEncoderBuffer {
-    internal
-    func encode(_ value: [UInt8]) {
-        data.append(contentsOf: value)
-    }
-
     func encode(_ value: Data) {
         data.append(contentsOf: value)
     }
@@ -108,11 +103,52 @@ extension BinaryEncoderBuffer {
         case let v as UInt32:
             encode(v)
 
+        case let v as String:
+            try encode(v)
+
+        case let v as [Int]:
+            encode(contentsOf: v)
+        case let v as [UInt]:
+            encode(contentsOf: v)
+
+        case let v as [Int64]:
+            encode(contentsOf: v)
+
+        case let v as [UInt64]:
+            encode(contentsOf: v)
+
+        case let v as [Float]:
+            encode(contentsOf: v)
+        case let v as [Double]:
+            encode(contentsOf: v)
+
+        case let v as [Bool]:
+            encode(contentsOf: v)
+
+        case let v as [Int8]:
+            encode(contentsOf: v)
+
+        case let v as [UInt8]:
+            encode(contentsOf: v)
+
+        case let v as [Int16]:
+            encode(contentsOf: v)
+
+        case let v as [UInt16]:
+            encode(contentsOf: v)
+
+        case let v as [Int32]:
+            encode(contentsOf: v)
+
+        case let v as [UInt32]:
+            encode(contentsOf: v)
+
+        case let v as [String]:
+            try encode(v)
+
         default:
             let encoder = BinaryEncoder(self)
             try encodable.encode(to: encoder)
-            // encoder.encode(encodable)
-            // ToBinaryEncodable(type(of: encodable))
         }
     }
 }
