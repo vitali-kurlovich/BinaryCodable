@@ -16,8 +16,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Bool {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Bool {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -25,8 +27,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == String {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == String {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -34,8 +38,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Double {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Double {
+       for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -43,8 +49,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Float {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Float {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -52,8 +60,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Int {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Int {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -61,8 +71,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Int8 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Int8 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -70,8 +82,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Int16 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Int16 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -79,8 +93,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Int32 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Int32 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -88,8 +104,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == Int64 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Int64 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -97,8 +115,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == UInt {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == UInt {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -106,8 +126,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == UInt8 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == UInt8 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -115,8 +137,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == UInt16 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == UInt16 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -124,8 +148,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == UInt32 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == UInt32 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -133,8 +159,10 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element == UInt64 {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == UInt64 {
+        for item in sequence {
+            try encode(item)
+        }
     }
 
     /// Encodes the elements of the given sequence.
@@ -142,7 +170,9 @@ extension BinaryEncodingUnkeyedContanier {
     /// - parameter sequence: The sequences whose contents to encode.
     /// - throws: An error if any of the contained values throws an error.
     public mutating
-    func encode<T>(contentsOf _: T) throws where T: Sequence, T.Element: Encodable {
-        throw Error.typeNotSupported
+    func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element: Encodable {
+        for item in sequence {
+            try encode(item)
+        }
     }
 }
