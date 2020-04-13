@@ -15,7 +15,7 @@ jobs:
     osx_image: xcode11.3
     language: swift
     script:
-    - xcodebuild -scheme Dense test -enableCodeCoverage YES -parallel-testing-enabled YES
+    - xcodebuild -scheme BinaryCodable test -enableCodeCoverage YES -parallel-testing-enabled YES
     #after_success:
     #- bash <(curl -s https://codecov.io/bash) -X xcodellvm
   - stage: Linux test
