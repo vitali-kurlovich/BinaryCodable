@@ -6,7 +6,7 @@ env:
   global:
   - SWIFT_BRANCH=swift-5.2-release
   - SWIFT_VERSION=swift-5.2-RELEASE
-  #- CODECOV_TOKEN="13ed7985-b6cd-4495-b33f-19f943e055c4"
+  - CODECOV_TOKEN="0534a757-49ad-4a13-90d9-fddfedb4d8a9"
   - PACKAGE_VERSION=0.0.1
 jobs:
   include:
@@ -16,8 +16,8 @@ jobs:
     language: swift
     script:
     - xcodebuild -scheme BinaryCodable test -enableCodeCoverage YES -parallel-testing-enabled YES
-    #after_success:
-    #- bash <(curl -s https://codecov.io/bash) -X xcodellvm
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -X xcodellvm
   - stage: Linux test
     os: linux
     language: generic
