@@ -9,6 +9,14 @@ import CoreFoundation
 import Foundation
 
 extension BinaryDecoderBuffer {
+    func decode() throws -> String {
+        // try decodeFixedWidthInteger()
+
+        let stringBinaryDecoder = StringBinaryDecoderBuffer(decoderBuffer: self)
+
+        return try stringBinaryDecoder.decode()
+    }
+
     func decode() throws -> Int8 {
         try decodeFixedWidthInteger()
     }
@@ -185,12 +193,6 @@ extension BinaryDecoderBuffer {
             decoder.decoderBuffer = self
             return try T(from: decoder)
         }
-    }
-}
-
-extension BinaryDecoderBuffer {
-    func decode() throws -> String {
-        throw Error.typeNotSupported
     }
 }
 

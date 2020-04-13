@@ -94,10 +94,67 @@ final class BinaryCodableTests: XCTestCase {
         XCTAssertEqual(test, value)
     }
 
+    func testEncodingStringTypes() {
+        let test = TestStringStructure(string1: "Hello world", string2: "")
+
+        let encoder = BinaryEncoder()
+        let decoder = BinaryDecoder()
+
+        XCTAssertNoThrow(try encoder.encode(test))
+        guard let data = try? encoder.encode(test) else {
+            return
+        }
+
+        XCTAssertNoThrow(try decoder.decode(TestStringStructure.self, from: data))
+        guard let value = try? decoder.decode(TestStringStructure.self, from: data) else {
+            return
+        }
+        XCTAssertEqual(test, value)
+    }
+
+    func testEncodingStringTypes_1() {
+        let test = TestStringStructure(string1: "Rōmaji", string2: "김")
+
+        let encoder = BinaryEncoder()
+        let decoder = BinaryDecoder()
+
+        XCTAssertNoThrow(try encoder.encode(test))
+        guard let data = try? encoder.encode(test) else {
+            return
+        }
+
+        XCTAssertNoThrow(try decoder.decode(TestStringStructure.self, from: data))
+        guard let value = try? decoder.decode(TestStringStructure.self, from: data) else {
+            return
+        }
+        XCTAssertEqual(test, value)
+    }
+
+    func testEncodingStringTypes_2() {
+        let test = TestStringStructure(string1: "Cafe\u{301} du 🌍", string2: "🇵🇷")
+
+        let encoder = BinaryEncoder()
+        let decoder = BinaryDecoder()
+
+        XCTAssertNoThrow(try encoder.encode(test))
+        guard let data = try? encoder.encode(test) else {
+            return
+        }
+
+        XCTAssertNoThrow(try decoder.decode(TestStringStructure.self, from: data))
+        guard let value = try? decoder.decode(TestStringStructure.self, from: data) else {
+            return
+        }
+        XCTAssertEqual(test, value)
+    }
+
     static var allTests = [
         ("testEncodingBaseTypes", testEncodingBaseTypes),
         ("testEncodingEncadable", testEncodingEncadable),
         ("testEncodingBaseSequence", testEncodingBaseSequence),
+        ("testEncodingStringTypes", testEncodingStringTypes),
+        ("testEncodingStringTypes_1", testEncodingStringTypes_1),
+        ("testEncodingStringTypes_2", testEncodingStringTypes_2),
     ]
 }
 
@@ -264,5 +321,26 @@ extension TestSequenceStructure: Codable {
 
         float = try container.decode([Float].self)
         double = try container.decode([Double].self)
+    }
+}
+
+struct TestStringStructure: Equatable {
+    let string1: String
+    let string2: String
+}
+
+extension TestStringStructure: Codable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+
+        try container.encode(string1)
+        try container.encode(string2)
+    }
+
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+
+        string1 = try container.decode(String.self)
+        string2 = try container.decode(String.self)
     }
 }

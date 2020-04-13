@@ -39,7 +39,7 @@ extension BinaryEncodingUnkeyedContanier {
     /// - throws: An error if any of the contained values throws an error.
     public mutating
     func encode<T>(contentsOf sequence: T) throws where T: Sequence, T.Element == Double {
-       for item in sequence {
+        for item in sequence {
             try encode(item)
         }
     }

@@ -12,6 +12,12 @@ extension BinaryEncoderBuffer {
         data.append(contentsOf: value)
     }
 
+    func encode(_ value: String) {
+        let stringBinaryEncoder = StringBinaryEncoderBuffer(encoderBuffer: self)
+
+        stringBinaryEncoder.encode(value)
+    }
+
     func encode(_ value: Bool) {
         encode(value ? 1 as UInt8 : 0 as UInt8)
     }
@@ -104,7 +110,7 @@ extension BinaryEncoderBuffer {
             encode(v)
 
         case let v as String:
-            try encode(v)
+            encode(v)
 
         case let v as [Int]:
             encode(contentsOf: v)

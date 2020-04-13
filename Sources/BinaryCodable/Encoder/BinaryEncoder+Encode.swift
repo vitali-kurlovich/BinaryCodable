@@ -11,6 +11,7 @@ extension BinaryEncoder {
     public func encode<T>(_ value: T) throws -> Data where T: Encodable {
         encoderBuffer.removeAll()
         try value.encode(to: self)
+
         defer {
             encoderBuffer.removeAll()
         }
