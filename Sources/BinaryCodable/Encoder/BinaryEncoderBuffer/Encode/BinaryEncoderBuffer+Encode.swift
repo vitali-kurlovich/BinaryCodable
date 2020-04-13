@@ -5,6 +5,7 @@
 //  Created by Vitali Kurlovich on 3/17/20.
 //
 
+import CoreFoundation
 import Foundation
 
 extension BinaryEncoderBuffer {
